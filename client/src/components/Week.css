@@ -1,0 +1,42 @@
+
+.week-card {
+  background: #232a5ed9;
+  padding: 10px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.week-card h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: rgb(234, 234, 241);
+}
+
+/* CENTER CHART */
+.week-card svg {
+  margin: auto;
+}
+
+/* RESPONSIVE GRID SUPPORT (if wrapped later) */
+@media (min-width: 768px) {
+  .week-card {
+    margin-bottom: 0;
+  }
+}
+
+
+
+.week-card h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* shrink chart container */
+.week-card svg {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 150px;
+  margin: auto;
+}

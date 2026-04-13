@@ -1,0 +1,79 @@
+/* GLOBAL RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+}
+
+/* MAIN CONTAINER */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* TITLE */
+.container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* SPACING BETWEEN SECTIONS */
+.container > * {
+  margin-bottom: 15px;
+}
+
+/* WEEKS GRID LAYOUT */
+.weeks-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 12px;
+  align-items: stretch;
+}
+
+
+/* tablet */
+@media (max-width: 1200px) {
+  .weeks-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .weeks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .weeks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* SMALL GLOBAL INPUT IMPROVEMENTS */
+input,
+select {
+  font-size: 14px;
+}
+
+/* BUTTON GLOBAL BASE */
+button {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#app-title{
+
+  color: rgb(36, 79, 147);
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 36px;
+}
