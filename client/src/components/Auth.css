@@ -1,0 +1,95 @@
+/* ===== Global Page Centering ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+}
+
+/* ===== Main Container ===== */
+.auth-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* ===== Title ===== */
+.auth-container h2 {
+  font-size: 50px;
+  margin-bottom: 20px;
+  color: #3a8250c4;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  
+}
+
+/* ===== Input Fields ===== */
+.auth-container input {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px 14px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease-in-out;
+  background: white;
+}
+
+.auth-container input:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+/* ===== Button ===== */
+.auth-container button {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  margin-top: 12px;
+  background: #435f7efc;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.auth-container button:hover {
+  background: #3b7ccc;
+  transform: translateY(-2px);
+}
+
+.auth-container button:active {
+  transform: translateY(0px);
+}
+
+/* ===== Toggle Text ===== */
+.auth-container p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #c5991f;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.auth-container p:hover {
+  color: #4a90e2;
+  text-decoration: underline;
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 480px) {
+  .auth-container h2 {
+    font-size: 22px;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    max-width: 100%;
+  }
+}

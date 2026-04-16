@@ -77,3 +77,25 @@ button {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 36px;
 }
+
+#logout-button{
+
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 27px;
+  padding: 5px 60px;
+  border-radius: 6px;
+  border: none;
+  background-color: rgb(44, 61, 94);
+  color: aqua;
+ display: block;
+ margin: 0 auto;
+ margin-top: 90px;
+  
+}
+#logout-button:hover{
+
+  background-color: rgb(219, 160, 13);
+  color: red;
+  transform: translateY(-3px);
+  transition: ease-in-out .3s;
+}
