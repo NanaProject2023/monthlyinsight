@@ -1,22 +1,22 @@
-
-Welcome to Monaco Lux, your virtual premier destination for luxury automobiles. Explore exquisite vehicles, interact with 3D models, and engage with our seamless customer experience.
+Monthly Insight is a full-stack financial tracking application that empowers users to log their daily expenses and profits, from day one to day thirty-one. Each entry includes a date, a title, and a price, and users can toggle between expenses or profits.
 Features
-	•	Luxury Car Showcase: A curated selection of high-end vehicles.
-	•	Interactive 3D Models: Engage with GLB car models for an immersive preview (future expansion planned to real car integrations).
-	•	Sold Cars Carousel: A dynamic image slider showcasing our sold luxury fleet.
-	•	Contact Form: Easily reach us via a built-in EmailJS contact system.
-	•	Advertising Spots: Strategically placed components for featured luxury models and promotions.
+	•	Date Selection: Choose any day from one to thirty-one to log financial data.
+	•	Title & Price: Each entry has a customizable title and amount.
+	•	Expense/Profit Toggle: Easily switch between logging expenses or profits.
+	•	Authentication: Secure sign-up and login using JWT (JSON Web Tokens), ensuring user sessions persist.
+	•	Session Persistence: Tokens are stored in local storage, so users return where they left off.
+	•	Charts: Five dynamic charts visualize weekly expense and profit trends, color-coded in red (negative) or green (positive). The fifth chart aggregates all days, giving a complete monthly overview.
 Tech Stack
 	•	Frontend: React.js
-	•	3D Models: GLB Files (via Three.js)
-	•	Contact: EmailJS integration
-	•	Deployment: GitHub Pages
-How to Use
-	1	Clone the repository or visit the live site.
-	2	Navigate the luxury inventory and interact with the 3D car models.
-	3	Use the contact form to reach out for inquiries.
-Future Enhancements
-	•	Real car model integrations coming soon.
-	•	Expanded dealership inventory with more high-end brands.
+	•	Backend: Node.js, Express
+	•	Database: PostgreSQL (via pg)
+	•	Environment Variables: dotenv
+	•	Password Security: bcrypt for hashing
+	•	API: JWT-based authentication with Bearer tokens in headers.
+	•	Session Persistence: User progress is saved in local storage.
+Authentication
+Upon signing up, users create a secure account with email and password. After login, a JWT token is issued and stored in local storage. Every request includes this token in the Bearer header, ensuring each session is authenticated and secure. Users can pick up exactly where they left off each time they log back in.
+Future Plans
+We aim to expand Monthly Insight to include more advanced analytics, personalized financial goals, and deeper investment insights.
 
 
