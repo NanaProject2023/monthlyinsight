@@ -53,22 +53,25 @@ const authMiddleware = (req, res, next) => {
 
 // 🔑 2. AUTH ROUTES
 app.post("/auth/signup", async (req, res) => {
+  console.log("🔥 SIGNUP HIT");
+  console.log("BODY:", req.body);
+  console.log("SECRET:", !!SECRET);
+  console.log("DB URL:", !!process.env.DATABASE_URL);
+
   try {
-    console.log("BODY:", req.body);
-
-    const email = req.body?.email;
-    const password = req.body?.password;
-
-    if (!email || !password) {
-      return res.status(400).json({ error: "Missing fields" });
-    }
+    const email = req.body.email;
+    const password = req.body.password;
 
     const hashed = await bcrypt.hash(password, 10);
+
+    console.log("🔐 HASH DONE");
 
     const result = await pool.query(
       "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
       [email, hashed]
     );
+
+    console.log("🧾 DB RESULT:", result.rows[0]);
 
     const user = result.rows[0];
 
@@ -77,21 +80,21 @@ app.post("/auth/signup", async (req, res) => {
       SECRET
     );
 
+    console.log("🎉 TOKEN CREATED");
+
     return res.json({ token });
 
   } catch (err) {
-  console.error("🔥 FULL SIGNUP ERROR:");
-  console.error("MESSAGE:", err.message);
-  console.error("CODE:", err.code);
-  console.error("DETAIL:", err.detail);
-  console.error("STACK:", err.stack);
+    console.error("🔥🔥🔥 FULL ERROR:");
+    console.error(err);
+    console.error(err.stack);
 
-  return res.status(500).json({
-    message: err.message,
-    code: err.code,
-    detail: err.detail,
-  });
-}
+    return res.status(500).json({
+      message: err.message,
+      code: err.code,
+      detail: err.detail,
+    });
+  }
 });
 
 app.post("/auth/login", async (req, res) => {
