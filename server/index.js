@@ -53,31 +53,57 @@ const authMiddleware = (req, res, next) => {
 
 // 🔑 2. AUTH ROUTES
 app.post("/auth/signup", async (req, res) => {
+  console.log("🔥 SIGNUP HIT");
+  console.log("BODY RECEIVED:", req.body);
 
   const { email, password } = req.body;
 
+  console.log("EMAIL:", email);
+  console.log("PASSWORD EXISTS:", !!password);
+
+  if (!email || !password) {
+    return res.status(400).json({
+      error: "Missing email or password",
+      received: req.body,
+    });
+  }
+
   try {
+    console.log("🔐 Hashing password...");
+
     const hashed = await bcrypt.hash(password, 10);
+
+    console.log("🧾 Inserting into DB...");
 
     const result = await pool.query(
       "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
       [email, hashed]
     );
 
-    const user = result.rows[0]; // 🔥 REQUIRED
+    console.log("✅ DB INSERT RESULT:", result.rows[0]);
+
+    const user = result.rows[0];
+
+    console.log("🔑 Signing JWT...");
 
     const token = jwt.sign(
       { id: user.id, email: user.email },
       SECRET
     );
 
+    console.log("🎉 TOKEN CREATED");
+
     return res.json({ token });
+
   } catch (err) {
-    console.log("🔥 SIGNUP ERROR:", err);
+    console.log("🔥 SIGNUP ERROR FULL:");
+    console.log(err);
+    console.log(err.stack);
 
     return res.status(500).json({
       error: err.message,
       code: err.code,
+      detail: err.detail,
     });
   }
 });
