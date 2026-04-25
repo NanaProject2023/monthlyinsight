@@ -1,10 +1,18 @@
+
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 
@@ -12,10 +20,10 @@ app.use(express.json());
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  connectionString: "postgresql://postgres:1234@localhost:5432/monthly_insight",
+  connectionString: "postgresql://postgres:monthlyinsightproject@db.hrpktcbwruetdtuodwkq.supabase.co:5432/postgres",
 });
 
-const SECRET = "mysecret";
+const SECRET = process.env.JWT_SECRET;
 
 
 // 🔐 1. MIDDLEWARE FIRST
@@ -51,10 +59,6 @@ app.post("/auth/signup", async (req, res) => {
       "INSERT INTO users (email, password) VALUES ($1, $2)",
       [email, hashed]
     );
-/*
-    const token = jwt.sign({ email }, SECRET);
-    res.json({ token });
-*/
 
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET);
 
@@ -93,8 +97,6 @@ app.post("/auth/login", async (req, res) => {
 });
 
 
-
-
 // GET
 app.get("/entries", authMiddleware, async (req, res) => {
   try {
@@ -121,29 +123,6 @@ app.get("/entries", authMiddleware, async (req, res) => {
 });
 
 // POST
-/*
-app.post("/entries", authMiddleware, async (req, res) => {
-  try {
-    const email = req.user?.email;
-
-    if (!email) {
-      return res.status(401).json({ error: "Missing email in token" });
-    }
-
-    const { type, amount, day } = req.body;
-
-    const result = await pool.query(
-      "INSERT INTO entries (user_id, type, amount, day, title) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-      [email, type, amount, day]
-    );
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error("POST /entries error:", err);
-    res.status(500).json({ error: "Database insert failed" });
-  }
-});
-*/
 app.post("/entries", authMiddleware, async (req, res) => {
   try {
     const { type, amount, day, title } = req.body;
@@ -194,4 +173,6 @@ app.delete("/entries/:id", authMiddleware, async (req, res) => {
   res.json({ success: true });
 });
 
-app.listen(5000, () => console.log("Server running on 5000"));
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
