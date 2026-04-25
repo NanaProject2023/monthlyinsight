@@ -60,7 +60,7 @@ app.post("/auth/signup", async (req, res) => {
       [email, hashed]
     );
 
-    const user = result.rows[0];
+    const user = result.rows[0]; // 🔥 REQUIRED
 
     const token = jwt.sign(
       { id: user.id, email: user.email },
@@ -69,13 +69,12 @@ app.post("/auth/signup", async (req, res) => {
 
     return res.json({ token });
   } catch (err) {
-    console.error("SIGNUP ERROR:", err);
+    console.log("🔥 SIGNUP ERROR:", err);
 
-    if (err.code === "23505") {
-      return res.status(400).json({ error: "User already exists" });
-    }
-
-    return res.status(500).json({ error: "Server error during signup" });
+    return res.status(500).json({
+      error: err.message,
+      code: err.code,
+    });
   }
 });
 
