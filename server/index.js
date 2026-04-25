@@ -7,9 +7,20 @@ const jwt = require("jsonwebtoken");
 
 
 const app = express();
+const allowedOrigins = [
+  "https://monthlyinsight.vercel.app",
+  "https://monthlyinsight-kokc1vbdm-nanaproject2023s-projects.vercel.app",
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
