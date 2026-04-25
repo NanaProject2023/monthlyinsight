@@ -24,6 +24,7 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
+  family: 4, // 🔥 FORCE IPv4
 });
 
 const SECRET = process.env.JWT_SECRET;
