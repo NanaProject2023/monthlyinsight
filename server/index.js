@@ -20,7 +20,10 @@ app.use(express.json());
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  connectionString: "postgresql://postgres:monthlyinsightproject@db.hrpktcbwruetdtuodwkq.supabase.co:5432/postgres",
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 const SECRET = process.env.JWT_SECRET;
@@ -51,8 +54,6 @@ const authMiddleware = (req, res, next) => {
 // 🔑 2. AUTH ROUTES
 app.post("/auth/signup", async (req, res) => {
 
-    console.log("🔥 SIGNUP HIT");
-  console.log("BODY:", req.body);
   const { email, password } = req.body;
 
   try {
