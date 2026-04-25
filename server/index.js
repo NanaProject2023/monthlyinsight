@@ -50,6 +50,9 @@ const authMiddleware = (req, res, next) => {
 
 // 🔑 2. AUTH ROUTES
 app.post("/auth/signup", async (req, res) => {
+
+    console.log("🔥 SIGNUP HIT");
+  console.log("BODY:", req.body);
   const { email, password } = req.body;
 
   try {
