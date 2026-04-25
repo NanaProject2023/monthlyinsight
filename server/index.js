@@ -80,14 +80,18 @@ app.post("/auth/signup", async (req, res) => {
     return res.json({ token });
 
   } catch (err) {
-    console.error("🔥 SIGNUP ERROR:");
-    console.error(err);
+  console.error("🔥 FULL SIGNUP ERROR:");
+  console.error("MESSAGE:", err.message);
+  console.error("CODE:", err.code);
+  console.error("DETAIL:", err.detail);
+  console.error("STACK:", err.stack);
 
-    return res.status(500).json({
-      message: err.message,
-      code: err.code,
-    });
-  }
+  return res.status(500).json({
+    message: err.message,
+    code: err.code,
+    detail: err.detail,
+  });
+}
 });
 
 app.post("/auth/login", async (req, res) => {
