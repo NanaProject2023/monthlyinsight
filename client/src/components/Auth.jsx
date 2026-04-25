@@ -8,6 +8,9 @@ export default function Auth({ setToken }) {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async () => {
+
+  console.log("EMAIL:", email);
+  console.log("PASSWORD:", password);
     const url = isLogin
       ? "https://monthlyinsight.onrender.com/auth/login"
       : "https://monthlyinsight.onrender.com/auth/signup";
