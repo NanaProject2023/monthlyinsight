@@ -55,47 +55,62 @@ app.post("/auth/signup", async (req, res) => {
   try {
     const hashed = await bcrypt.hash(password, 10);
 
-    await pool.query(
-      "INSERT INTO users (email, password) VALUES ($1, $2)",
+    const result = await pool.query(
+      "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
       [email, hashed]
     );
 
-    const token = jwt.sign({ id: user.id, email: user.email }, SECRET);
+    const user = result.rows[0];
 
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      SECRET
+    );
+
+    return res.json({ token });
   } catch (err) {
+    console.error("SIGNUP ERROR:", err);
+
     if (err.code === "23505") {
       return res.status(400).json({ error: "User already exists" });
     }
-    res.status(500).json({ error: "Server error" });
+
+    return res.status(500).json({ error: "Server error during signup" });
   }
 });
 
 app.post("/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
-  const result = await pool.query(
-    "SELECT * FROM users WHERE email = $1",
-    [email]
-  );
+  try {
+    const result = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [email]
+    );
 
-  if (result.rows.length === 0) {
-    return res.status(400).json({ error: "User not found" });
+    if (result.rows.length === 0) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    const user = result.rows[0];
+
+    const valid = await bcrypt.compare(password, user.password);
+
+    if (!valid) {
+      return res.status(400).json({ error: "Wrong password" });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      SECRET
+    );
+
+    return res.json({ token });
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+    return res.status(500).json({ error: "Login failed" });
   }
-
-  const user = result.rows[0];
-
-  const valid = await bcrypt.compare(password, user.password);
-  if (!valid) {
-    return res.status(400).json({ error: "Wrong password" });
-  }
-
-  /*
-  const token = jwt.sign({ email }, SECRET);
-  res.json({ token });
-  */
- const token =jwt.sign({ id: user.id, email: user.email }, SECRET);
 });
-
 
 // GET
 app.get("/entries", authMiddleware, async (req, res) => {
