@@ -16,7 +16,7 @@ function App() {
 
 const fetchEntries = async () => {
   try {
-    const res = await axios.get("http://localhost:5000/entries", {
+    const res = await axios.get("https://monthlyinsight.onrender.com/entries", {
       headers: { Authorization: token },
     });
     setEntries(res.data);
@@ -35,7 +35,7 @@ const fetchEntries = async () => {
   }, [token]);
 
 const addEntry = async (entry) => {
-  await axios.post("http://localhost:5000/entries", entry, {
+  await axios.post("https://monthlyinsight.onrender.com/entries", entry, {
     headers: {
       Authorization: token, 
     },
@@ -44,7 +44,7 @@ const addEntry = async (entry) => {
 };
 
 const deleteEntry = async (id) => {
-  await axios.delete(`http://localhost:5000/entries/${id}`, {
+  await axios.delete(`https://monthlyinsight.onrender.com/entries/${id}`, {
     headers: {
       Authorization: token, 
     },

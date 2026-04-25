@@ -9,8 +9,8 @@ export default function Auth({ setToken }) {
 
   const handleSubmit = async () => {
     const url = isLogin
-      ? "http://localhost:5000/auth/login"
-      : "http://localhost:5000/auth/signup";
+      ? "https://monthlyinsight.onrender.com/auth/login"
+      : "https://monthlyinsight.onrender.com/auth/signup";
 
     try {
       const res = await axios.post(url, { email, password });
